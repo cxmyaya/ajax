@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .body,p{
+            margin: 0;
+        }
+        .container{
+            width: 300px;
+            height: 360px;
+            margin: 100px auto;
+            padding: 10px;
+            color: rgba(0,0,0,.6);
+            text-align: center;
+            background-color: #fff;
+            box-shadow: 0 0 20px #ccc;
+        }
+        .container p{
+            line-height: 50px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .container img{
+            display: block;
+            width: 200px;
+            height: 200px;
+            margin: 0 auto;
+            border: 1px solid #ccc;
+        }
+        .container button{
+            display: inline-block;
+            width: 60px;
+            height: 30px;
+            color: rgba(0,0,0,.6);
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow:1px -1px 3px #656565 inset;
+            cursor: pointer;
+            outline: orangered;
+
+        }
+        .container button+button{
+            margin-left: 10px;
+        }
+        .container button:hover{
+            border: none;
+            color: #fff;
+            background-color: orangered;
+        }
+    </style>
+    <script src="./js/json2.js"></script>
+    <script src="./js/jQuery-myAjax.js"></script>
+    <script>
+        window.onload = function(ev){
+            let title = document.querySelector('#title');
+            let des = document.querySelector('#des');
+            let img = document.querySelector('img');
+            let btns = document.querySelectorAll('button');
+            btns.forEach(function(item){
+                item.onclick = function(){
+                let oThis = this;
+                ajax({
+                    type:'get',
+                    url:'./php/06-ajax-商品.php',
+                    data:{
+                        'name':this.getAttribute('name')
+                    },
+                    timeout:3000,
+                    success:function(xhr){
+                        // alert(xhr.responseText);
+                        // let res = xhr.responseText.split('|');
+                        // title.innerHTML = res[0];
+                        // des.innerHTML = res[1];
+                        // img.src = res[2];
+
+                        //通过 xml 获取数据
+                        // let name = oThis.getAttribute('name');
+                        // let res = xhr.responseXML;
+
+                        // let oTitle = res.querySelector(name + ' > title').innerHTML;
+                        // let oDes = res.querySelector(name + ' > des').innerHTML;
+                        // let oImg = res.querySelector(name + ' > image').innerHTML;
+                        // title.innerHTML = oTitle;
+                        // des.innerHTML = oDes;
+                        // img.src = oImg;
+
+                        //通过 json 获取数据
+                        /**
+                         * 体积比 xml 小，传输速度快，用户体验比较好
+                         */ 
+                        let name = oThis.getAttribute('name');
+                        let str = xhr.responseText;
+                        /*注意:由于低版本IE浏览器没有 JSON.parse(),因此需要引入 json2.js 来兼容这个方法*/
+                        let obj = JSON.parse(str)[name];
+                        title.innerHTML = obj.title;
+                        des.innerHTML = obj.des;
+                        img.src = obj.image;
+                    },
+                    error:function(xhr){
+                        console.log(xhr.status);
+                    }
+                })
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <p id="title">商品标题名称</p>
+        <!-- <div class="img"></div> -->
+        <img src="" alt="">
+        <p id="des">商品信息</p>
+        <button name='nz'>女装</button>
+        <button name='bb'>包包</button>
+        <button name='tx'>拖鞋</button>
+    </div>
+</body>
+</html>

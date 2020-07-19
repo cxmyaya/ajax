@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /**
+         * cookie: 会话跟踪技术 客户端
+         * session：会话跟踪技术    服务端
+         * 
+         * cookie 作用：
+         *      默认情况下生命周期是一次会话（直到浏览器被关闭）
+         *      如果通过 expires= 设置了过期时间，并且没有过期，那么下次重新打开浏览器还是存在保存的数据
+         *      如果通过 expores= 设置了过期时间，如果已经过期了，那么会立即删除保存的数据
+         * 
+         * cookie 注意点：
+         *      cookie 默认不会保存任何数据
+         *      cookie 不能一次性设置多条数据，要想保存多条数据，只能一条一条的设置
+         *      cookie 有大小和个数的限制
+         *      个数限制：20~50
+         *      大小限制：4KB左右
+         * 
+         * cookie 作用范围：
+         *      同一个浏览器的同一个路径下可以访问
+         *      如果在同一个浏览器中，默认情况下下一级路径可以访问
+         *      如果在同一个浏览器中，想让上一级目录也能访问保存的 cookie,那么需要添加一个 path 属性才可以
+         *          document.cookie = 'name=xxx;path=/;'    根目录下的都可以访问
+         *      
+         *      例如：在 www.it666.com 下保存了一个 cookie,那么想在 edu.it666.com 中是无法访问的
+         *      如果想在edu.it666.com 中也能访问，那么需要添加一句代码 domain=it666.com; (根域名一样就可以访问，不用看二级域名)
+         *     
+         */
+        let date = new Date();
+        date.setDate(date.getDate() + 1);
+        document.cookie = 'age=18;expires=' + date.toGMTString() + ';';
+        alert(document.cookie); 
+
+        //保存 cookie 的完整形式，不论是目录上下级还是什么样的二级域名，只要是同个站点，保存的数据都可以相互访问
+        document.cookie = 'name=xxx;path=/;domain=127.0.0.1'
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /**
+         * 用 cookie 保存当前页码只能使得在本地的同一个浏览器中刷新依然停留在当前页
+         * 而用 hash (会在 url 后面加上 #数字 来标记当前页码)，将地址赋复制给别人或者在别的浏览器打开时，依然显示当前页
+         */
+        
+         window.location.hash = 2; //http://127.0.0.1/ajax/08-hash.html#2
+         console.log( window.location.hash) //#2
+         console.log(window.location.hash.substring(1))
+    </script>
+</body>
+</html>

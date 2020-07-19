@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+         1. 什么是 ajax ?
+        ajax 是与服务器交换数据并更新部分网页的艺术，在不重新加载整个页面的情况下（比如模糊搜索内容）
+        而之前的form表单的与服务器交换数据会重新加载整个页面
+    -->
+    <button>发送请求</button>
+    <script>
+        let btn = document.querySelector('button');
+        btn.onclick = (function(){
+            /*
+            *   使用 ajax 的五个步骤：
+            *   1. 创建一个异步对象
+            *   2. 设置请求方式和请求地址
+            *   3. 发送请求
+            *   4. 监听状态的变化
+            *   5. 处理返回的结果
+            */
+
+            //1. 创建一个异步对象
+            // let xmlhttp = new XMLHttpRequest(); IE5 6不兼容,下面可以解决这个问题
+            let xmlhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP'); 
+
+
+           //2. 设置请求方式和请求地址
+           //xmlhttp.open() 第三个参数代表异步，ajax的意义就在于异步，所以一般为 true
+           /*
+           *    在 IE 浏览器中，如果通过 ajax 发送 get 请求，那么 IE 浏览器会认为同一个 url 只有一个结果（不会实时更新数据）
+           *    可以通过在请求地址后面加上 ?变化的数 使得每次请求的 url 都不一样
+           *    ? 后面的变化的数可以用以下两种方式获得：
+           *        Math.random()
+           *        new Date().getTime() 
+           */
+            xmlhttp.open('GET','./php/04-ajax-get.php?' + (new Date().getTime()) ,true);
+
+            //3. 发送请求
+            xmlhttp.send();
+
+            //4. 监听状态的变化
+            xmlhttp.onreadystatechange = function(ev){
+                /*
+                *   1. 请求未初始化
+                *   2. 服务器连接已建立
+                *   3. 请求处理中
+                *   4. 请求已完成，且响应已就绪
+                */
+
+                //5. 处理返回的结果
+               if(xmlhttp.readyState === 4){
+                   //判断是否请求成功
+                   if(xmlhttp.status >= 200 && xmlhttp.status < 300 || xmlhttp.status === 304){
+                       console.log(xmlhttp.responseText);
+                   }else{
+                       console.log('接收服务器数据失败！');
+                   }
+               }
+            }
+
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="./js/myAjax.js"></script> -->
+    <script src="./js/jQuery-myAjax.js"></script>
+
+</head>
+<body>
+    <button>发送请求</button>
+    <script>
+        let btn = document.querySelector('button');
+        btn.onclick = function(){
+            // ajax('post','./php/04-ajax-get.php',{
+            //     'userName':'xxx',
+            //     'password':123456
+            // },3000,function(xhr){
+            //     alert(xhr.responseText);
+            // },function(xhr){
+            //     alert('请求数据失败！')
+            // })
+
+            ajax({
+                url:'./php/04-ajax-get.php',
+                type:'post',
+                data:{
+                    'userName':'xxx',
+                    'password':123456
+                },
+                timeout:3000,
+                success:function(xhr){
+                    alert(xhr.responseText);
+                },
+                error:function(xhr){
+                    alert('请求数据失败！')
+                }
+            })
+        }
+    </script>
+</body>
+</html>
